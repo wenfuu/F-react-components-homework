@@ -27,14 +27,26 @@ class Chat extends Component {
     }, 1000);
   }
 
+  handleSubmit = (inputMessage) => {
+    const input = this.state.messages.concat(inputMessage);
+    const response = answersData.find((answer) => answer.tags.includes(inputMessage.text));
+    const messages = input.concat(response);
+
+    setTimeout(() => {
+      this.setState({
+        messages,
+      });
+    }, 1000);
+  };
+
   render() {
     const { shop, messages } = this.state;
     return (
-      <main className="Chat">
-        <ChatHeader shop={shop} />
-        <ChatBox messages={messages} />
-        <ChatInput />
-      </main>
+        <main className="Chat">
+          <ChatHeader shop={shop} />
+          <ChatBox messages={messages} />
+          <ChatInput onClick={this.handleSubmit} />
+        </main>
     );
   }
 }
